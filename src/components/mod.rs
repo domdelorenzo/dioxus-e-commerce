@@ -9,3 +9,6 @@ pub use product_container::ProductContainer;
 
 mod product_item;
 // pub use product_item; 
+
+mod sidebar;
+pub use sidebar::Sidebar;

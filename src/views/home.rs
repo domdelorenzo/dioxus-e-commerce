@@ -1,36 +1,6 @@
-// use crate::components::Hero;
-// use crate::components::ProductContainer;
 use dioxus::prelude::*;
 
-use crate::{
-    components::Hero,
-    components::ProductContainer,
-};
-
-
-// struct Cart {
-//     items: Vec<Product>,
-// }
-
-// struct Product {
-//     id: String,
-//     image: String,
-//     category: String,
-//     title: String,
-//     price: String,
-// }
-
-// impl Cart {
-//     fn add(&mut self, product: Product) {
-//         self.items.push(product);
-//     }
-// }
-
-// impl Cart {
-//     fn remove(&mut self, product_id: &str) {
-//         self.items.retain(|product| product.id != product_id);
-//     }
-// }
+use crate::components::{Hero, ProductContainer, Sidebar};
 
 #[component]
 pub fn Home() -> Element {
@@ -40,7 +10,7 @@ pub fn Home() -> Element {
     // use_context_provider(|| Signal::new(Cart { items: vec![] }));
     rsx! {
         Hero {}
-
         ProductContainer {}
+        Sidebar {  }
     }
 }

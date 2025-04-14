@@ -1,3 +1,4 @@
+#![allow(non_snake_case)]
 use dioxus::prelude::*;
 
 use components::Navbar;
@@ -6,6 +7,7 @@ use views::{ProductPage, Home};
 mod components;
 mod views;
 mod api;
+mod scroll;
 
 #[derive(Debug, Clone, Routable, PartialEq)]
 #[rustfmt::skip]
@@ -28,6 +30,7 @@ fn main() {
 #[component]
 fn App() -> Element {
     // Build cool things ✌️
+    // use_context_provider(|| Signal::new(Cart {items: vec![]}));
 
     rsx! {
         // Global app resources
@@ -38,3 +41,36 @@ fn App() -> Element {
         Router::<Route> {}
     }
 }
+
+
+
+
+// struct Cart {
+//     items: Vec<api::Product>,
+// }
+
+
+
+// struct Cart {
+//     items: Vec<Product>,
+// }
+
+// struct Product {
+//     id: String,
+//     image: String,
+//     category: String,
+//     title: String,
+//     price: String,
+// }
+
+// impl Cart {
+//     fn add(&mut self, product: Product) {
+//         self.items.push(product);
+//     }
+// }
+
+// impl Cart {
+//     fn remove(&mut self, product_id: &str) {
+//         self.items.retain(|product| product.id != product_id);
+//     }
+// }
