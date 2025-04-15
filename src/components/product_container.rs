@@ -1,6 +1,6 @@
 use crate::{
   Product,
-  api::{fetch_products, Sort},
+  api::{fetch_products, Sort, Product as ApiProduct},
   components::product_item::product_item
 };
 use dioxus::prelude::*;
@@ -11,7 +11,7 @@ pub fn ProductContainer() -> Element {
   let products = use_server_future(|| fetch_products(20, Sort::Ascending))?;
   let products = products().unwrap()?
     .into_iter()
-    .map(|api_product| Product {
+    .map(|api_product: ApiProduct| Product {
       // Map fields from `api::Product` to `Product`
       id: api_product.id,
       price: api_product.price,
