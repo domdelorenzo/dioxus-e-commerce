@@ -43,14 +43,11 @@ pub struct Product {
 
 #[derive(Clone, Default)]
 pub struct Cart {
-    // items: Signal<Vec<api::Product>>
     items: Signal<Vec<Product>>,
 }
 
 impl Cart {
-    // fn add(&mut self, product: api::Product) {
-    //     self.items.write().push(product);
-    // }
+
     fn add(&mut self, product: Product) {
         // Check if the product already exists in the cart
         let mut items = self.items.write(); // Create a single mutable borrow
