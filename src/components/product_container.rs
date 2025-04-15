@@ -1,4 +1,5 @@
 use crate::{
+  Product,
   api::{fetch_products, Sort},
   components::product_item::product_item
 };
@@ -8,8 +9,32 @@ use dioxus::prelude::*;
 pub fn ProductContainer() -> Element {
   // access product context
   let products = use_server_future(|| fetch_products(10, Sort::Ascending))?;
-  let products = products().unwrap()?;
+  let products = products().unwrap()?
+    .into_iter()
+    .map(|api_product| Product {
+      // Map fields from `api::Product` to `Product`
+      id: api_product.id,
+      price: api_product.price,
+      description: api_product.description,
+      category: api_product.category,
+      title: api_product.title,
+      image: api_product.image,
+      amount: 1, // Default amount to 1
+      // Add other fields as necessary
+    })
+    .collect::<Vec<Product>>();
 
+  // map over products cast to CartItem struct
+  // let extended_products = products
+  //   .iter()
+  //   .map(|product| {
+  //     let product = product.clone();
+  //     CartItem {
+  //       product: product.clone(),
+  //       amount: 1,
+  //     }
+  //   })
+  //   .collect::<Vec<CartItem>>();  
   // filter context 
 
   rsx! {

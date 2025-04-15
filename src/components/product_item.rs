@@ -1,19 +1,34 @@
 use crate::Route;
 use dioxus::prelude::*;
 use dioxus_free_icons::{icons::bs_icons::{BsEyeFill, BsPlus}, Icon};
-use crate::api::Product;
+// use crate::api::Product;
+use crate::{Cart, Product};
 
 
 #[component]
 pub(crate) fn product_item(product: Product) -> Element {
-  let Product {
+// pub(crate) fn product_item(product: Product) -> Element {
+    let Product {
     id,
     image,
     category,
     title,
     price,
     ..
-  } = product;
+  } = product.clone();
+  // let CartItem {
+  //   product: Product {
+  //     id,
+  //     image,
+  //     category,
+  //     title,
+  //     price,
+  //     ..
+  //   },
+  //   amount,
+  // } = product.clone();
+  let cart = use_context::<Signal<Cart>>();
+
   rsx! {
     div {
       div { class: "border border-[#e4e4e4] h-[300px] mb-4 relative overflow-hidden group transition",
@@ -28,7 +43,9 @@ pub(crate) fn product_item(product: Product) -> Element {
         }
         div { class: "absolute top-6 -right-11 group-hover:right-5 p-2 flex flex-col justify-center items-center gap-y-2 opacity-0 group-hover:opacity-100 transition-all duration-300",
           button {
-            div { class: "flex justify-center items-center text-white w-12 h-12 bg-teal-500",
+            div { 
+              class: "flex justify-center items-center text-white w-12 h-12 bg-teal-500",
+              onclick: move |_| cart().add(product.clone()),
               Icon {
                 width: 30,
                 height: 30,
