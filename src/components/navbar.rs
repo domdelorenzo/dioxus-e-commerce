@@ -21,14 +21,6 @@ pub fn Navbar() -> Element {
     use_effect(move || {
         let scroll_metrics = scroll_metrics();
         let scroll_value = scroll_metrics.scroll_top;
-        // let mut is_active = is_active.clone();
-        // let closure = Closure::wrap(Box::new(move || {
-        //     let scroll_value = scroll_metrics.scroll_top;
-        //     is_active.set(scroll_value > 60.0);
-        // }) as Box<dyn FnMut()>);
-        // window().add_event_listener_with_callback("scroll", closure.as_ref().unchecked_ref()).unwrap();
-        // closure.forget(); // Prevents the closure from being dropped
-
         is_active.set(scroll_value > 60.0);
     });
     let mut sidebar_expanded = use_context::<Signal<SideBarExpanded>>();

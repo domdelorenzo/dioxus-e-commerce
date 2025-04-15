@@ -5,19 +5,7 @@ use std::sync::atomic::{AtomicUsize, Ordering};
 #[derive(serde::Deserialize, Clone, Debug)]
 pub struct ScrollMetrics {
     /// Current scroll position from top: https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollTop
-    pub scroll_top: f64,
-    /// Current scroll position from left: https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollLeft
-    pub scroll_left: f64,
-
-    /// Viewport height: https://developer.mozilla.org/en-US/docs/Web/API/Element/clientHeight
-    pub client_height: f64,
-    /// Viewport width: https://developer.mozilla.org/en-US/docs/Web/API/Element/clientWidth
-    pub client_width: f64,
-
-    /// Content height: https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollHeight
-    pub scroll_height: f64,
-    /// Content width: https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollWidth
-    pub scroll_width: f64,
+    pub scroll_top: f64
 }
 
 // Static counter to generate unique IDs for each scroll tracker instance
@@ -59,11 +47,6 @@ pub fn use_root_scroll() -> Signal<ScrollMetrics> {
 
     let mut scroll_metrics = use_signal(|| ScrollMetrics {
         scroll_top: 0.0,
-        scroll_left: 0.0,
-        client_height: 0.0,
-        client_width: 0.0,
-        scroll_height: 0.0,
-        scroll_width: 0.0,
     });
 
     use_future({

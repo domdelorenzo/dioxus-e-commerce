@@ -1,6 +1,8 @@
 // use crate::Route;
 use dioxus::prelude::*;
-use crate::api::{fetch_product, Product};
+use crate::api::fetch_product;
+use crate::{ Cart, Product };
+use crate::api::Product as ApiProduct;
 
 // const BLOG_CSS: Asset = asset!("/assets/styling/blog.css");
 
@@ -9,16 +11,27 @@ pub fn ProductPage(id: u32) -> Element {
     let product = use_server_future(move || fetch_product(id))?;
     let product = product().unwrap()?;
 
-    let Product {
-        // id,
+    let ApiProduct {
+        id,
         image,
-        // category,
         title,
         price,
         description,
-        // rating,
+        category,
         ..
-      } = product;
+    } = product.clone();
+    // cast to Product struct
+    let cast_product = Product {
+        id: product.id,
+        image: product.image,
+        title: product.title,
+        price: product.price,
+        category: product.category,
+        description: product.description,
+        amount: 1,
+    };
+
+      let cart = use_context::<Signal<Cart>>();
     
     rsx! {
         // document::Link { rel: "stylesheet", href: BLOG_CSS }
@@ -38,7 +51,10 @@ pub fn ProductPage(id: u32) -> Element {
                         }
                         div { class: "text-2xl text-red-500 font-medium mb-6", "$ {price}" }
                         p { class: "mb-8", "{description}" }
-                        button { class: "bg-primary py-4 px-8 text-white", "Add to cart" }
+                        button { 
+                            onclick: move |_| { cart().add(cast_product.clone());},
+                            class: "bg-primary py-4 px-8 text-white", "Add to cart" 
+                        }
                     }
                 }
             }

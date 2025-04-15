@@ -8,7 +8,7 @@ use dioxus::prelude::*;
 #[component]
 pub fn ProductContainer() -> Element {
   // access product context
-  let products = use_server_future(|| fetch_products(10, Sort::Ascending))?;
+  let products = use_server_future(|| fetch_products(20, Sort::Ascending))?;
   let products = products().unwrap()?
     .into_iter()
     .map(|api_product| Product {
@@ -19,23 +19,12 @@ pub fn ProductContainer() -> Element {
       category: api_product.category,
       title: api_product.title,
       image: api_product.image,
-      amount: 1, // Default amount to 1
-      // Add other fields as necessary
+      amount: 1, 
+    }).filter(|product| {
+      // Filter on clothing categories
+     product.category == "men's clothing" || product.category == "women's clothing" || product.category == "jewelery"
     })
     .collect::<Vec<Product>>();
-
-  // map over products cast to CartItem struct
-  // let extended_products = products
-  //   .iter()
-  //   .map(|product| {
-  //     let product = product.clone();
-  //     CartItem {
-  //       product: product.clone(),
-  //       amount: 1,
-  //     }
-  //   })
-  //   .collect::<Vec<CartItem>>();  
-  // filter context 
 
   rsx! {
     section { class: "py-20",

@@ -10,7 +10,6 @@ pub fn CartItem(product: Product) -> Element {
   let Product {
     id,
     image,
-    category,
     title,
     price,
     amount,
@@ -37,7 +36,11 @@ pub fn CartItem(product: Product) -> Element {
         {/* image */}
         Link { 
           to: "/product/{id}",
-          img { class: "max-w-[80px]", src: {image}, alt:"" }
+          img { 
+            class: "max-w-[80px]", 
+            src: image, 
+            alt:"" 
+          }
         }
         div { class: "w-full flex flex-col",
           {/* title and remove icon */}
@@ -99,7 +102,7 @@ pub fn CartItem(product: Product) -> Element {
               class: "flex flex-1 justify-end items-center text-primary font-medium",
             // "$ {(price * amount).to_fixed(2)}"
   
-            "$ {(price * amount as f32).to_string()}"
+            {format!("$ {:.02}",(price * amount as f32))}
             }
           }
         }

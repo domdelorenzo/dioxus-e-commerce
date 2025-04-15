@@ -69,6 +69,7 @@ impl Cart {
             product.amount += 1;
         }
     }
+
     fn decrease_amount(&mut self, id: u32) {
         let mut items = self.items.write();
         if let Some(product) = items.iter_mut().find(|p| p.id == id) {
@@ -80,58 +81,23 @@ impl Cart {
             }
         }
     }
+
     fn remove(&mut self, id: u32) {
         let mut items = self.items.write();
         items.retain(|p| p.id != id);
     }
+
+    fn clear(&mut self) {
+        let mut items = self.items.write();
+        items.clear();
+    }
 }
-
-
-// const addToCart = (product, id) => {
-//     const newItem = { ...product, amount: 1 };
-//     // check if the item is already in the cart
-//     const cartItem = cart.find((item) => {
-//       return item.id === id;
-//     });
-//     if (cartItem) {
-//       const newCart = [...cart].map((item) => {
-//         if (item.id === id) {
-//           return { ...item, amount: cartItem.amount + 1 };
-//         } else return item;
-//       });
-//       setCart(newCart);
-//     } else {
-//       setCart([...cart, newItem]);
-//     }
-//   };
-// struct ApplicationData {
-//     first_data: Signal<i32>,
-//     second_data: Signal<i32>,
-//     many_signals: Signal<Vec<Signal<i32>>>,
-// }
-// pub struct Cart<'a> {
-//     items: Vec<&'a api::Product>,
-// }
-
-// impl<'a> Cart<'a> {
-//     fn add(&mut self, product: &'a api::Product) {
-//         self.items.push(product);
-//     }
-// }
-
-// impl Cart {
-//     fn remove(&mut self, product_id: &str) {
-//         self.items.retain(|product| product.id != product_id);
-//     }
-// }
 
 #[component]
 fn App() -> Element {
     // Build cool things ✌️
-    // use_context_provider(|| Signal::new(Cart {items: vec![]}));
     use_context_provider(|| Signal::new(Cart::default()));
     use_context_provider(|| Signal::new(SideBarExpanded(false)));
-    // use_context_provider(|| Signal::new(Cart.add))
 
     rsx! {
         // Global app resources
@@ -142,8 +108,3 @@ fn App() -> Element {
         Router::<Route> {}
     }
 }
-
-
-
-
-
