@@ -29,12 +29,12 @@ pub fn ProductPage(id: u32) -> Element {
     };
 
     let ApiProduct {
-        id,
+  
         image,
         title,
         price,
         description,
-        category,
+
         ..
     } = product.clone();
     // cast to Product struct
