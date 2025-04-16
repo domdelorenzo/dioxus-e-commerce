@@ -1,5 +1,5 @@
 [build]
-  command = "cargo install trunk && trunk build --release"
+  command = "cargo install dioxus-cli && dx bundle --platform web"
   publish = "dist"
   # functions = "functions"  # Only needed for SSR
 
