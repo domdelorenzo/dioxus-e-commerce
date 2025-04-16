@@ -1,5 +1,5 @@
 [build]
-  command = "cargo install dioxus-cli && dx bundle --platform web --release --target wasm32-unknown-unknown"
+  command = "dx bundle --platform web --release --target wasm32-unknown-unknown"
   publish = "dist"
   # functions = "functions"  # Only needed for SSR
 
