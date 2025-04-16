@@ -1,3 +1,11 @@
+[build]
+  command = "cargo install trunk && trunk build --release"
+  publish = "dist"
+  # functions = "functions"  # Only needed for SSR
+
+[build.environment]
+  RUST_VERSION = "stable" 
+
 [context.production]
 environment = { NETLIFY_EXPERIMENTAL_BUILD_RUST_SOURCE = "true" }
 
