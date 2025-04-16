@@ -3,7 +3,6 @@ use dioxus::prelude::*;
 use dioxus_free_icons::{icons::fi_icons::FiTrash2, icons::io_icons::IoArrowForward, Icon};
 use crate::{Cart, components::CartItem, SideBarExpanded};
 
-
 #[component]
 pub fn Sidebar() -> Element {
     let item_amount = use_context::<Signal<Cart>>()().items.len();
@@ -17,13 +16,12 @@ pub fn Sidebar() -> Element {
       "-right-full w-full bg-white fixed top-0 h-full shadow-2xl md:w-[35vw] lg:w-[40vw] xl:max-w-[30vw] transition-all duration-300 z-20 px-4 lg:px-[35px]"
     };
 
+    use_effect(move || {
+      let cart = cart();
+      let total = cart.items.iter().map(|product| product.price * product.amount as f32).sum::<f32>();
+      total_price.set(total);
+    });
 
-  use_effect(move || {
-    let cart = cart();
-    let total = cart.items.iter().map(|product| product.price * product.amount as f32).sum::<f32>();
-    total_price.set(total);
-  });
-    let cart = use_context::<Signal<Cart>>();
     rsx! {
       div { class: sidebar_style,
         div { class: "flex items-center justify-between py-6 border-b",

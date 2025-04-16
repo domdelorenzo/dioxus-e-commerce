@@ -31,7 +31,7 @@ pub fn Navbar() -> Element {
             div { class: "container mx-auto flex items-center justify-between h-full",
                 Link { to: Route::Home {},
                     div { class: "w-[40px]",
-                        img { src: LOGO }
+                        img { src: LOGO, alt: "logo" }
                     }
                 }
                 div {

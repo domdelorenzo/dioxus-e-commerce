@@ -19,3 +19,6 @@ script = []
 # Javascript code file
 # serve: [dev-server] only
 script = []
+
+# [web.https] https://github.com/DioxusLabs/dioxus/pull/1182
+# enabled = true
