@@ -5,6 +5,8 @@
 
 [build.environment]
   RUST_VERSION = "stable" 
+  CARGO_HOME = "/opt/buildhome/.cargo"
+  RUSTUP_HOME = "/opt/buildhome/.rustup"
 
 [context.production]
 environment = { NETLIFY_EXPERIMENTAL_BUILD_RUST_SOURCE = "true" }
