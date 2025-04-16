@@ -920,7 +920,6 @@ dependencies = [
  "dioxus-ssr",
  "dioxus-web",
  "manganis",
- "serde",
  "warnings",
 ]
 

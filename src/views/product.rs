@@ -8,8 +8,25 @@ use crate::api::Product as ApiProduct;
 
 #[component]
 pub fn ProductPage(id: u32) -> Element {
-    let product = use_server_future(move || fetch_product(id))?;
-    let product = product().unwrap()?;
+    let product_resource = use_resource(move || fetch_product(id));
+    // check if product_resource returns OK, set product equal to result or error
+    let product = match *product_resource.read() {
+        Some(Ok(ref product)) => product.clone(),
+        Some(Err(_)) => {
+            return rsx! {
+                div { class: "flex justify-center items-center h-screen",
+                    p { class: "text-2xl font-semibold", "Failed to load product." }
+                }
+            };
+        }
+        None => {
+            return rsx! {
+                div { class: "flex justify-center items-center h-screen",
+                    p { class: "text-2xl font-semibold", "Loading..." }
+                }
+            };
+        }
+    };
 
     let ApiProduct {
         id,

@@ -8,8 +8,25 @@ use dioxus::prelude::*;
 #[component]
 pub fn ProductContainer() -> Element {
   // access product context
-  let products = use_server_future(|| fetch_products(20, Sort::Ascending))?;
-  let products = products().unwrap()?
+  let products_resource = use_resource(|| fetch_products(20, Sort::Ascending));
+  let products = match *products_resource.read() {
+    Some(Ok(ref products)) => products.clone(),
+    Some(Err(_)) => {
+      return rsx! {
+        div { class: "flex justify-center items-center h-screen",
+          p { class: "text-2xl font-semibold", "Failed to load products." }
+        }
+      };
+    }
+    None => {
+      return rsx! {
+        div { class: "flex justify-center items-center h-screen",
+          p { class: "text-2xl font-semibold", "Loading..." }
+        }
+      };
+    }
+  };
+  let products = products
     .into_iter()
     .map(|api_product: ApiProduct| Product {
       // Map fields from `api::Product` to `Product`
