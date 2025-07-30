@@ -13,5 +13,5 @@ environment = { NETLIFY_EXPERIMENTAL_BUILD_RUST_SOURCE = "true" }
 
 [[redirects]]
   from = "/*"
-  to = "/index.html"
+  to = "/public/index.html"
   status = 200
